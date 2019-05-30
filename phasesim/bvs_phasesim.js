@@ -66,9 +66,9 @@
                     ,'k-belt'      : {graze : [10]}
                     ,'maxfox'      : {graze : [11]}
                     ,'triedge'     : {dmg : 50}
-                    ,'endurance'   : true
+                    //,'endurance'   : true
                     ,'pinktaser'   : true
-                    ,'pinkskull'   : true
+                    //,'pinkskull'   : true
                     ,'magnifier'   : true };
 
     const numFields = {'hacks'      : 'drainStr'
@@ -265,7 +265,7 @@
     }
 
     function statsSummaryHTML(stats, simStats) {
-        return [
+        var result = [
             `Drain: ${stats.season}+${stats.drain - stats.season}`
           , `Str: ${stats.drainStr}` 
           , `Rng: ${stats.drainRng}`
@@ -276,6 +276,14 @@
           , `Graze chance: ${(100 * simStats.dodgeChance).toFixed(0)}%`
           , `To hit: ${(100 * simStats.tohit).toFixed(0)}%`]
           .join(resultsSpacerS);
+        var line2 = [];
+        if (stats.magnifier)
+            line2.push('Magnifier');
+        if (stats.pinktaser)
+            line2.push('Pink taser');
+        if (line2.length > 0)
+            result += '<br>' + line2.join(resultsSpacerS);
+        return result;
     }
 
     function stratSummaryHTML(strat, simStats) {
@@ -315,9 +323,9 @@
             .map((b, i) => [i, winsPercent(b)])
             .filter(() => true) // Skip empty slots
             .filter(([i, p]) => p >= 1));
-        lines.push(`<b>Stamina:</b>${resultsSpacerS}` +
+        lines.push(`<b>Focus buys:</b>${resultsSpacerS}` +
             stamData
-            .map(([i, p]) => `${i} (${stamCost(i)}): ${p.toFixed(1)}%`)
+            .map(([i, p]) => `${i}: ${p.toFixed(1)}%`)
             .join(resultsSpacerL) + '<hr>');
         var p = document.createElement('p');
         p.innerHTML = lines.join('<br>');
