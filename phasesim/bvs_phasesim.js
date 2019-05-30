@@ -65,11 +65,11 @@
                     ,'timecube'    : {graze : [11]}
                     ,'k-belt'      : {graze : [10]}
                     ,'maxfox'      : {graze : [11]}
-                    ,'triedge'     : {dmg : 50}
+                    ,'triedge'     : {dmg : 50} };
                     //,'endurance'   : true
-                    ,'pinktaser'   : true
+                    //,'pinktaser'   : true
                     //,'pinkskull'   : true
-                    ,'magnifier'   : true };
+                    //,'magnifier'   : true };
 
     const numFields = {'hacks'      : 'drainStr'
                       ,'season'     : 'drain, drainRng, season'
@@ -317,13 +317,15 @@
         var resData = [['Defeat', samplesPercent(results.losses)]];
         resData.push(
             ...results.lifeBuys
-            .map((b, i) => [i, samplesPercent(b)])
+            .map((b, i) => [`Win (${i} ${i === 1 ? 'life' : 'lives'} bought)`
+                           , samplesPercent(b)])
             .filter(() => true));
         lines.push(`<b>Results:</b>${resultsSpacerS}` +
             resData
-            .map(([label, pct]) => `${label} : ${pct.toFixed(1)}%`)
+            .map(([label, pct]) => `${label}: ${pct.toFixed(1)}%`)
             .join(resultsSpacerL));
         // Stamina costs
+        /* Are not done. It was a silly idea anyway.
         var stamData = (
             results.focusBuys
             .map((b, i) => [i, winsPercent(b)])
@@ -333,6 +335,7 @@
             stamData
             .map(([i, p]) => `${i}: ${p.toFixed(1)}%`)
             .join(resultsSpacerL) + '<hr>');
+        */
         var p = document.createElement('p');
         p.innerHTML = lines.join('<br>');
         resbox.prepend(p);
