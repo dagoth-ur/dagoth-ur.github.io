@@ -317,11 +317,12 @@
         var resData = [['Defeat', samplesPercent(results.losses)]];
         resData.push(
             ...results.lifeBuys
-            .map((b, i) => [i, samplesPercent(b)])
+            .map((b, i) => [`Win (${i} ${i === 1 ? 'life' : 'lives'} bought)`
+                           , samplesPercent(b)])
             .filter(() => true));
         lines.push(`<b>Results:</b>${resultsSpacerS}` +
             resData
-            .map(([label, pct]) => `${label} : ${pct.toFixed(1)}%`)
+            .map(([label, pct]) => `${label}: ${pct.toFixed(1)}%`)
             .join(resultsSpacerL));
         // Stamina costs
         var stamData = (
