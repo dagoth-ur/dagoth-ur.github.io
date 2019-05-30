@@ -4,106 +4,7 @@
     <meta charset="utf-8" />
     <title>BvS Phase Fight Simulator</title>
     <script src="bvs_phasesim.js"></script>
-<style>
-body {
-  font-family : "Sans Serif";
-}
-form {
-  display : flex;
-  justify-content : space-around;
-  margin : 0;
-}
-#goform {
-  display : flex;
-  justify-content : start;
-  margin : 0 10px;
-}
-.formcol {
-  flex-grow : 1;
-  margin : 0 15px;
-  /* flex-basis : 30%; */
-}
-.formrow {
-  display : flex;
-  min-height : 1.5em;
-  padding : 2px;
-  justify-content : space-between;
-  align-items : center;
-}
-formrow:nth-of-type(odd) {
-  background : #cfcfcf;
-}
-.formrow:nth-of-type(even) {
-  background : #efefef;
-}
-input {
-  text-align : right;
-}
-#phaseform .formcol {
-  flex-basis : 45%;
-}
-select {
-  width : 100%;
-}
-#helpcontainer {
-  box-sizing : border-box;
-  width : 95%;
-  margin : 0 15px;
-}
-#helphead {
-  border : dotted black 1px;
-  padding : 5px 5px;
-  display : flex;
-  justify-content : space-between;
-}
-#helphead span.foldheading::after {
-  font-weight : bold;
-  content : "Click to show info";
-}
-#helphead span.foldarrow::after {
-  content : "\25b6";
-}
-#helphead.active span.foldheading::after {
-  font-weight : bold;
-  content : "Click to hide info";
-}
-#helphead.active span.foldarrow::after {
-  content : "\25bc";
-}
-#helpbox {
-  width : 100%;
-  box-sizing : border-box;
-  padding : 5px 5px;
-  border : dotted black 1px;
-  border-top : none;
-}
-.hidable {
-  display : none;
-}
-.hidable.active {
-  /* Sadly, not yet supported very well 
-  display : revert; */
-  display : block;
-}
-#eleven-note {
-  visibility : hidden;
-}
-#eleven-note.active {
-  visibility : visible;
-}
-.pushradios label {
-  white-space : nowrap;
-}
-#stickybox {
-  position : sticky;
-  top : 0;
-  border-bottom : 1px solid black;
-  background-color : white;
-}
-#resultbox {
-  margin : 0 15px;
-}
-</style>
+    <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
     <h1>BvS Phase Fight Simulator</h1>
@@ -112,11 +13,11 @@ select {
         <h4>Drain strength:</h4>
         <div class="formrow">
           <label for="hacks">Active hacks</label>
-          <input id="hacks" type="text" maxlength=2 size=3 value="20" inputmode="decimal">
+          <input id="hacks" type="text" maxlength=2 size=3 value="0" inputmode="decimal">
         </div>
         <div class="formrow">
           <label for="r00t">R00t rank (+2)</label>
-          <input id="r00t" type="checkbox">
+          <input id="r00t" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="epitaph">Epitaph of Twilight (+2)</label>
@@ -137,15 +38,15 @@ select {
         </div>
         <div class="formrow">
           <label for="lycoris">Lycoris (+5)</label>
-          <input id="lycoris" type="checkbox">
+          <input id="lycoris" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="boomstick">Boomstick (+2)</label>
-          <input id="boomstick" type="checkbox">
+          <input id="boomstick" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="flaskmist">Flask of Mist (+1)</label>
-          <input id="flaskmist" type="checkbox">
+          <input id="flaskmist" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="_555phone">555 Phone (+1)</label>
@@ -170,11 +71,11 @@ select {
         <h4>Drain edge:</h4>
         <div class="formrow">
           <label for="aromagrass">Aromatic Grass (Bit Shop) (+5)</label>
-          <input id="aromagrass" type="checkbox">
+          <input id="aromagrass" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="wiredrefl">Wired Reflexes (Bit Shop) (+10)</label>
-          <input id="wiredrefl" type="checkbox">
+          <input id="wiredrefl" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="r00t-edge">R00t power (+10)</label>
@@ -203,7 +104,7 @@ select {
         <h4>DC reduction (-1% at max push):</h4>
         <div class="formrow">
           <label for="wotan">Spear of Wotan</label>
-          <input id="wotan" type="checkbox">
+          <input id="wotan" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="bulltime">Bullet Time (Bit Shop)</label>
@@ -213,7 +114,7 @@ select {
         <div class="formrow">
           <!-- There are 4-simultaneous 24-days within a single rotation of Earth. -->
           <label for="timecube">Time Reversal Cube (+11%)</label>
-          <input id="timecube" type="checkbox">
+          <input id="timecube" type="checkbox" checked>
         </div>
         <div class="formrow">
           <label for="k-belt">K-Belt (+10%)</label>
@@ -226,7 +127,7 @@ select {
         <h4>Other stuffs:</h4>
         <div class="formrow">
           <label for="triedge">Tri-Edge (Bit Shop) (+50% dmg)</label>
-          <input id="triedge" type="checkbox">
+          <input id="triedge" type="checkbox" checked>
         </div>
         <!--
         <div class="formrow">
@@ -236,7 +137,7 @@ select {
         -->
         <div class="formrow">
           <label for="pinktaser">'Goodbye Kitten' Pink Taser (12 atks / focus)</label>
-          <input id="pinktaser" type="checkbox">
+          <input id="pinktaser" type="checkbox" checked>
         </div>
         <!--
         <div class="formrow">
@@ -246,7 +147,7 @@ select {
         -->
         <div class="formrow">
           <label for="magnifier">Duality Magnifier (upgrade) (13% not to use attack)</label>
-          <input id="magnifier" type="checkbox">
+          <input id="magnifier" type="checkbox" checked>
         </div>
       </div>
       <div class="formcol" style="flex-basis : 220px">
@@ -308,11 +209,11 @@ select {
             <span>Detective Duo:</span>
             <span class="pushradios">
               <label for="dd-strat-max">
-                <input id="dd-strat-max" type="radio" name="dd-strat"> Max push
+                <input id="dd-strat-max" type="radio" name="dd-strat" checked> Max push
               </label>
               <span style="padding-left: 1.5em"></span>
               <label for="dd-strat-min">
-                <input id="dd-strat-min" type="radio" name="dd-strat" checked> Min push
+                <input id="dd-strat-min" type="radio" name="dd-strat"> Min push
               </label>
             </span>
           </div>
@@ -330,7 +231,7 @@ select {
           </div>
           <div class="formrow">
             <label for="or-switch">Use Offline Romance team</label>
-            <input type="checkbox" id="or-switch">
+            <input type="checkbox" id="or-switch" checked>
           </div>
           <div class="formrow">
             <label for="oxyblast">Use OxyBlast</label>
