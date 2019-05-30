@@ -58,14 +58,14 @@ select {
 }
 #helphead span.foldheading::after {
   font-weight : bold;
-  content : "Click to show help";
+  content : "Click to show info";
 }
 #helphead span.foldarrow::after {
   content : "\25b6";
 }
 #helphead.active span.foldheading::after {
   font-weight : bold;
-  content : "Click to hide help";
+  content : "Click to hide info";
 }
 #helphead.active span.foldarrow::after {
   content : "\25bc";
@@ -272,7 +272,23 @@ select {
     </form>
     <div id="helpcontainer">
       <div id="helphead"><span class='foldheading'></span><span class='foldarrow'></span></div>
-      <div id="helpbox" class="hidable">Insert explanatory text here... later</div>
+      <div id="helpbox" class="hidable">
+        <p>
+        Fights are simulated with Detective Duo team bonuses, with possible
+        switch to Offline Romance team if it's the only remaining way to gain
+        an extra life. Both teams have separate min-push / max-push settings.
+        </p>
+        <p>
+        Results give the statistics for how many fights ended in failure and
+        how many extra lives needed to be bought for fights that didn't. There
+        are also statistic for number of attacks bought.
+        </p>
+        <p>A single step of the simulation is a single attack. There are rolls
+        for duality magnifier activations, death and graze. Average damage per
+        attack is calculated using formulas from drain level, edge, to-hit chance (based on
+        difficulty, strength and range). Individual drain rolls aren't simulated.
+        </p>
+      </div>
     </div>
     <div id='stickybox'>
       <form id="phaseform">

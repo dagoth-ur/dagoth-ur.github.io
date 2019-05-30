@@ -287,16 +287,22 @@
     }
 
     function stratSummaryHTML(strat, simStats) {
-        var stratLine = (
-            '<b>Strategy:</b>' + resultsSpacerS
-          + ` DD at ${strat.ddMaxPush ? 'max push' : 'min push'}`
-          + ` (Dmg: ${simStats.ddDmg.toFixed(0)}; DC: ${simStats.ddDC}%)`);
-        if (!simStats.offRomanceAvailable)
-            return stratLine;
-        stratLine += (
-            ` ---&gt; OR at ${strat.orMaxPush ? 'max push' : 'min push'}`
-          + ` (Dmg: ${simStats.orDmg.toFixed(0)}; DC: ${simStats.orDC}%)`);
-        return stratLine;
+        var stratLine = '<b>Strategy:</b>' + resultsSpacerS;
+        var stratSteps = [];
+        if (strat.useOxy)
+            stratSteps.push(
+                `OxyBlast with DD at max push`
+              + ` (${simStats.oxyDmg.toFixed(0)} dmg)`);
+        stratSteps.push(
+            ` DD at ${strat.ddMaxPush ? 'max push' : 'min push'}`
+          + ` (Dmg: ${simStats.ddDmg.toFixed(0)}; DC: ${simStats.ddDC}%)`);
+        if (simStats.offRomanceAvailable) {
+            stratSteps.push(
+                `OR at ${strat.orMaxPush ? 'max push' : 'min push'}`
+              + ` (Dmg: ${simStats.orDmg.toFixed(0)};`
+              + ` DC: ${simStats.orDC}%)`);
+        }
+        return stratLine + stratSteps.join(' ---&gt; ');
     }
 
     function printResults() {
