@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>BvS Phase Fight Simulator</title>
+    <script src="bvs_phasesim.js"></script>
+<style>
+body {
+  font-family : "Sans Serif";
+}
+form {
+  display : flex;
+  justify-content : space-around;
+  margin : 0;
+}
+#goform {
+  display : flex;
+  justify-content : start;
+  margin : 0 10px;
+}
+.formcol {
+  flex-grow : 1;
+  margin : 0 15px;
+  /* flex-basis : 30%; */
+}
+.formrow {
+  display : flex;
+  min-height : 1.5em;
+  padding : 2px;
+  justify-content : space-between;
+  align-items : center;
+}
+formrow:nth-of-type(odd) {
+  background : #cfcfcf;
+}
+.formrow:nth-of-type(even) {
+  background : #efefef;
+}
+input {
+  text-align : right;
+}
+#phaseform .formcol {
+  flex-basis : 45%;
+}
+select {
+  width : 100%;
+}
+#helpcontainer {
+  box-sizing : border-box;
+  width : 95%;
+  margin : 0 15px;
+}
+#helphead {
+  border : dotted black 1px;
+  padding : 5px 5px;
+  display : flex;
+  justify-content : space-between;
+}
+#helphead span.foldheading::after {
+  font-weight : bold;
+  content : "Click to show help";
+}
+#helphead span.foldarrow::after {
+  content : "\25b6";
+}
+#helphead.active span.foldheading::after {
+  font-weight : bold;
+  content : "Click to hide help";
+}
+#helphead.active span.foldarrow::after {
+  content : "\25bc";
+}
+#helpbox {
+  width : 100%;
+  box-sizing : border-box;
+  padding : 5px 5px;
+  border : dotted black 1px;
+  border-top : none;
+}
+.hidable {
+  display : none;
+}
+.hidable.active {
+  /* Sadly, not yet supported very well 
+  display : revert; */
+  display : block;
+}
+#eleven-note {
+  visibility : hidden;
+}
+#eleven-note.active {
+  visibility : visible;
+}
+.pushradios label {
+  white-space : nowrap;
+}
+#stickybox {
+  position : sticky;
+  top : 0;
+  border-bottom : 1px solid black;
+  background-color : white;
+}
+#resultbox {
+  margin : 0 15px;
+}
+</style>
+  </head>
+  <body>
+    <h1>BvS Phase Fight Simulator</h1>
+    <form id="statsform">
+      <div class="formcol">
+        <h4>Drain strength:</h4>
+        <div class="formrow">
+          <label for="hacks">Active hacks</label>
+          <input id="hacks" type="text" maxlength=2 size=3 value="20" inputmode="decimal">
+        </div>
+        <div class="formrow">
+          <label for="r00t">R00t rank (+2)</label>
+          <input id="r00t" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="epitaph">Epitaph of Twilight (+2)</label>
+          <input id="epitaph" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="skullthrone">Skull Throne (village upgrade) (+1)</label>
+          <input id="skullthrone" type="checkbox" checked>
+        </div>
+        <h4>Drain level:</h4>
+        <div class="formrow">
+          <label for="season">Season</label>
+          <input id="season" type="text" maxlength=3 size=3 inputmode="decimal">
+        </div>
+        <div class="formrow">
+          <label for="tonicbonus">Drain Tonic bonus</label>
+          <input id="tonicbonus" type="text" maxlength=2 size=3 inputmode="decimal">
+        </div>
+        <div class="formrow">
+          <label for="lycoris">Lycoris (+5)</label>
+          <input id="lycoris" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="boomstick">Boomstick (+2)</label>
+          <input id="boomstick" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="flaskmist">Flask of Mist (+1)</label>
+          <input id="flaskmist" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="_555phone">555 Phone (+1)</label>
+          <input id="_555phone" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="r00t-drain">R00t power (+5)</label>
+          <input id="r00t-drain" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="r00t-fu">R00t fu (Bit Shop) (+2)</label>
+          <input id="r00t-fu" type="checkbox">
+        </div>
+        <div class="formrow">
+          <label for="amplifier">Drain Amplifier (village upgrade) (+2)</label>
+          <input id="amplifier" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="overclock">Overclock Elixir (consumable) (+5)</label>
+          <input id="overclock" type="checkbox">
+        </div>
+        <h4>Drain edge:</h4>
+        <div class="formrow">
+          <label for="aromagrass">Aromatic Grass (Bit Shop) (+5)</label>
+          <input id="aromagrass" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="wiredrefl">Wired Reflexes (Bit Shop) (+10)</label>
+          <input id="wiredrefl" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="r00t-edge">R00t power (+10)</label>
+          <input id="r00t-edge" type="checkbox" checked>
+        </div>
+        <h4>
+      </div>
+      <div class="formcol">
+        <h4>Lives:</h4>
+        <div class="formrow">
+          <label for="legacy">Legacy (+1)</label>
+          <input id="legacy" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="guardian">Summoned Twilight Guardian (+1)</label>
+          <input id="guardian" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="lifefavor">Extra life favor available</label>
+          <input id="lifefavor" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="zawazawa">Zawa Zawa available</label>
+          <input id="zawazawa" type="checkbox">
+        </div>
+        <h4>DC reduction (-1% at max push):</h4>
+        <div class="formrow">
+          <label for="wotan">Spear of Wotan</label>
+          <input id="wotan" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="bulltime">Bullet Time (Bit Shop)</label>
+          <input id="bulltime" type="checkbox" checked>
+        </div>
+        <h4>Graze:</h4>
+        <div class="formrow">
+          <!-- There are 4-simultaneous 24-days within a single rotation of Earth. -->
+          <label for="timecube">Time Reversal Cube (+11%)</label>
+          <input id="timecube" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="k-belt">K-Belt (+10%)</label>
+          <input id="k-belt" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="maxfox">Max level 1.1-tailed fox (+11%)</label>
+          <input id="maxfox" type="checkbox">
+        </div>
+        <h4>Other stuffs:</h4>
+        <div class="formrow">
+          <label for="triedge">Tri-Edge (Bit Shop) (+50% dmg)</label>
+          <input id="triedge" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="endurance">Digital Endurance (Bit Shop) (-25% focus cost)</label>
+          <input id="endurance" type="checkbox">
+        </div>
+        <div class="formrow">
+          <label for="pinktaser">'Goodbye Kitten' Pink Taser (12 atks / focus)</label>
+          <input id="pinktaser" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="pinkskull">Pink Skull (-20 focus cost)</label>
+          <input id="pinkskull" type="checkbox" checked>
+        </div>
+        <div class="formrow">
+          <label for="magnifier">Duality Magnifier (upgrade) (13% not to use attack)</label>
+          <input id="magnifier" type="checkbox" checked>
+        </div>
+      </div>
+      <div class="formcol" style="flex-basis : 220px">
+        <h4>Stats:</h4>
+        <div class="formrow"><span>Drain level:</span><span id="dlvl">1</span></div>
+        <div class="formrow"><span>Drain strength:</span><span id="dstr">1</span></div>
+        <div class="formrow"><span>Drain range:</span><span id="drng">11</span></div>
+        <div class="formrow"><span>Drain edge:</span><span id="dedg">0</span></div>
+        <div class="formrow"><span>Dmg bonus:</span><span id="dmgplus">0</span></div>
+        <hr>
+        <div class="formrow"><span>Base lives:</span><span id="lives">1</span></div>
+        <div class="formrow"><span>Buyable lives:</span><span id="buylives">0</span></div>
+        <div class="formrow"><span>Graze:</span><span id="graze">None</span></div>
+        <div class="formrow"><span>Extra DC% at max push:</span><span id="dcplus">0</span></div>
+        <hr>
+        <h5>Detective Duo team:</h5>
+        <div class="formrow"><span>Avg. dmg at min push:</span><span id="mindmg-dd">0</span></div>
+        <div class="formrow"><span>Avg. dmg at max push:</span><span id="maxdmg-dd">0</span></div>
+        <h5>Offline Romance team:</h5>
+        <div class="formrow"><span>Avg. dmg at min push:</span><span id="mindmg-or">0</span></div>
+        <div class="formrow"><span>Avg. dmg at max push:</span><span id="maxdmg-or">0</span></div>
+      </div>
+    </form>
+    <div id="helpcontainer">
+      <div id="helphead"><span class='foldheading'></span><span class='foldarrow'></span></div>
+      <div id="helpbox" class="hidable">Insert explanatory text here... later</div>
+    </div>
+    <div id='stickybox'>
+      <form id="phaseform">
+        <div class="formcol">
+          <h4>Phase:</h4>
+          <select id="phase-select">
+            <!-- Filled from JavaScript -->
+          </select>
+          <div class="formrow"><span>Phase HP:</span><span id="ph-hp">0</span></div>
+          <div class="formrow"><span>Phase difficulty:</span><span id="ph-diff">0</span></div>
+          <div class="formrow"><span>To hit chance:</span><span id="ph-tohit">0%</span></div>
+          <div id="eleven-note" class="formrow">(2 lives lost when killed)</div>
+        </div>
+        <div class="formcol">
+          <h4>Strategy</h4>
+          <div class="formrow">
+            <span>Detective Duo:</span>
+            <span class="pushradios">
+              <label for="dd-strat-max">
+                <input id="dd-strat-max" type="radio" name="dd-strat" checked> Max push
+              </label>
+              <span style="padding-left: 1.5em"></span>
+              <label for="dd-strat-min">
+                <input id="dd-strat-min" type="radio" name="dd-strat"> Min push
+              </label>
+            </span>
+          </div>
+          <div class="formrow">
+            <span>Offline Romance:</span>
+            <span class="pushradios">
+              <label for="or-strat-max">
+                <input id="or-strat-max" type="radio" name="or-strat" checked> Max push
+              </label>
+              <span style="padding-left: 1.5em"></span>
+              <label for="or-strat-min">
+                <input id="or-strat-min" type="radio" name="or-strat"> Min push
+              </label>
+            </span>
+          </div>
+          <div class="formrow">
+            <label for="or-switch">Use Offline Romance team</label>
+            <input type="checkbox" id="or-switch" checked>
+          </div>
+          <div class="formrow">
+            <label for="oxyblast">Use OxyBlast</label>
+            <input type="checkbox" id="oxyblast">
+          </div>
+          <div class="formrow">
+            <label for="dayslive">Phase days alive</label>
+            <input id="dayslive" type="text" size=2 maxlength=2 inputmode="decimal" value="0">
+          </div>
+        </div>
+      </form>
+      <hr>
+      <div class="formrow" style="margin : 0 15px">
+        <span>
+          <label for="numsamples">Number of fights:</label>
+          <input type="text" id="numsamples" size=8 maxlength=8 value="100000" inputmode="decimal">
+        </span>
+        <span style="padding-left: 1.5em"></span>
+        <span>
+          <label for="numthreads">Number of CPU threads:</label>
+          <input type="text" id="numthreads" size=3 maxlength=3 value="2" inputmode="decimal">
+        </span>
+        <span style="padding-left: 1.5em"></span>
+        <span id='simmsg'></span>
+        <span style="flex-grow : 1"></span>
+        <button id='gobtn'>Simulate</button>
+      </div>
+      <div class="formrow" style="margin : 0 15px; padding: 5px 3px">
+        <h4 style="margin : 0">Results:</h4><a id='clearlink' href="javascript:void">(clear)</a>
+      </div>
+    </div>
+    <div id='resultbox'></div>
+  </body>
+</html>
